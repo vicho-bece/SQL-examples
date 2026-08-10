@@ -3,7 +3,15 @@ SELECT * FROM staff;
 SELECT * FROM ordenes;
 SELECT * FROM clientes;
 SELECT * FROM orden_item;
+SELECT * FROM tiendas;
 
+
+SELECT 
+	ciudad_cliente as "Ciudad",
+	COUNT(*) as "Cantidad de Clientes"
+FROM clientes
+GROUP BY "Ciudad"
+ORDER BY "Cantidad de Clientes" DESC;
 
 -- CANTIDAD DE ORDENES SEGUN EL STAFF ASIGANDO
 
@@ -41,5 +49,19 @@ SELECT
 FROM clientes as c
 INNER JOIN ordenes as o ON c.id_cliente = o.id_orden_cli
 INNER JOIN orden_item as i ON i.id_orden_item = o.id_orden
-GROUP BY "Cliente"
+GROUP BY c.id_cliente, c.nombre_cliente, c.apellido_cliente
 ORDER BY "Cantidad Total Gastado" DESC;
+
+SELECT 
+	t.nombre_tienda as "Nombre de la Tienda",
+	SUM(i.item_cantidad) as "Cantidades Vendidas"
+FROM tiendas as t
+INNER JOIN ordenes as o ON o.id_orden_tienda = t.id_tienda
+INNER JOIN orden_item as i ON i.id_orden_item = o.id_orden
+GROUP BY "Nombre de la Tienda"
+ORDER BY "Cantidades Vendidas" DESC;
+
+
+
+
+
