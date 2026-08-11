@@ -176,7 +176,7 @@ CREATE TABLE ordenes(
 
 	constraint Orden_pk primary key(id_orden),
 
-	constraint fk_orden_cliente foreign key(id_orden_cli) references clientes(id_cliente),
+	constraint fk_orden_cliente foreign key(id_orden_cli) references clientes(id_cliente) ON DELETE CASCADE,
 	constraint fk_orden_tienda foreign key(id_orden_tienda) references tiendas(id_tienda),
 	constraint fk_orden_staff foreign key(id_orden_staff) references staff(id_staff)
 );
