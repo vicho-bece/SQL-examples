@@ -1,4 +1,3 @@
-
 CREATE TABLE marcas(
 	id_marca integer not null,
 	nombre_marca varchar(20) not null,
@@ -99,7 +98,7 @@ CREATE TABLE staff(
 	
 	constraint chk_email_staff check (email_staff is null or email_staff like '%_@%_.%_'),
 
-	constraint fk_id_tienda foreign key (id_tienda_staff) references tiendas (id_tienda),
+	constraint fk_id_tienda foreign key (id_tienda_staff) references tiendas (id_tienda) ON DELETE CASCADE ON UPDATE CASCADE,
 	constraint fk_id_ADMIN foreign key (id_admin) references staff (id_staff) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
@@ -129,8 +128,8 @@ CREATE TABLE productos(
 
 	constraint Producto_pk primary key (id_producto),
 
-	constraint fk_prod_marca foreign key(id_prod_marca) references marcas(id_marca),
-	constraint fk_prod_categoria foreign key(id_prod_categoria) references categorias(id_categoria)
+	constraint fk_prod_marca foreign key(id_prod_marca) references marcas(id_marca) ON DELETE CASCADE ON UPDATE CASCADE,
+	constraint fk_prod_categoria foreign key(id_prod_categoria) references categorias(id_categoria) ON DELETE CASCADE ON UPDATE CASCADE
 	
 );
 
@@ -151,8 +150,8 @@ CREATE TABLE inventario(
 	id_stock_producto integer not null,
 	cantidad integer not null,
 
-	constraint fk_stock_tienda foreign key(id_stock_tienda) references tiendas(id_tienda),
-	constraint fk_stock_producto foreign key(id_stock_producto) references productos(id_producto)
+	constraint fk_stock_tienda foreign key(id_stock_tienda) references tiendas(id_tienda) ON DELETE CASCADE ON UPDATE CASCADE,
+	constraint fk_stock_producto foreign key(id_stock_producto) references productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 COPY inventario(
@@ -176,9 +175,9 @@ CREATE TABLE ordenes(
 
 	constraint Orden_pk primary key(id_orden),
 
-	constraint fk_orden_cliente foreign key(id_orden_cli) references clientes(id_cliente) ON DELETE CASCADE,
-	constraint fk_orden_tienda foreign key(id_orden_tienda) references tiendas(id_tienda),
-	constraint fk_orden_staff foreign key(id_orden_staff) references staff(id_staff)
+	constraint fk_orden_cliente foreign key(id_orden_cli) references clientes(id_cliente) ON DELETE CASCADE ON UPDATE CASCADE,
+	constraint fk_orden_tienda foreign key(id_orden_tienda) references tiendas(id_tienda) ON DELETE CASCADE ON UPDATE CASCADE,
+	constraint fk_orden_staff foreign key(id_orden_staff) references staff(id_staff) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 COPY ordenes(
@@ -206,8 +205,8 @@ CREATE TABLE orden_item(
 
 	constraint Orden_item_pk primary key(id_orden_item, id_item),
 
-	constraint fk_orden_item foreign key(id_orden_item) references ordenes(id_orden),
-	constraint fk_item_producto foreign key(id_item_producto) references productos(id_producto)
+	constraint fk_orden_item foreign key(id_orden_item) references ordenes(id_orden) ON DELETE CASCADE ON UPDATE CASCADE,
+	constraint fk_item_producto foreign key(id_item_producto) references productos(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 COPY orden_item(
