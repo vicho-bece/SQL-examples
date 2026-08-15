@@ -1,3 +1,27 @@
+-- FUNCION PARA TRADUCIR EL ESTADO ACTUAL DE LA ORDEN DE UN CLIENTE
+CREATE OR REPLACE FUNCTION fn_estado_orden(
+	num_estado NUMERIC
+)
+RETURNS TEXT AS $$
+DECLARE
+	estado TEXT;
+BEGIN
+	CASE
+		WHEN num_estado = 1 THEN
+			estado = 'Pendiente';
+		WHEN num_estado = 2 THEN 
+			estado = 'Procesando';
+		WHEN num_estado = 3 THEN 
+			estado = 'Rechazado';
+		ELSE 
+			estado = 'Completado';
+	END CASE;
+
+	RETURN estado;
+END
+$$
+LANGUAGE plpgsql;
+
 -- FUNCION PARA IMPEDIR QUE UN USUARIO ELIMINE DATOS DE LA TABLA PRODUCTOS
 CREATE OR REPLACE FUNCTION fn_prevenir_delete()
 RETURNS TRIGGER

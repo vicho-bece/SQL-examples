@@ -126,3 +126,33 @@ SELECT
 	"Compras"
 FROM clientes_ordenes
 WHERE "rank" <= 3;
+
+
+-- Consulta para mostrar la ID, estado y ciudad del cliente; cuya orden no ha sido completado o rechazado.
+SELECT
+	c.id_cliente,
+	o.id_orden,
+	c.estado_cliente,
+	c.ciudad_cliente,
+	fn_estado_orden(o.orden_estado) AS "Estado de la Orden"
+FROM clientes AS c
+INNER JOIN ordenes AS o ON o.id_orden_cli = c.id_cliente
+WHERE fn_estado_orden(o.orden_estado) NOT IN ('Completado', 'Rechazado');
+
+-- WITH para calcular la suma final segun el numero de orden.
+WITH join_orden AS (
+	SELECT
+		id_orden_item,
+		SUM(precio_total * descuento) AS precio_final
+	FROM orden_item
+	GROUP BY id_orden_item
+)
+
+-- Consulta para obtener el mayor precio final por la fecha de orden.
+SELECT 
+	o.fecha_orden,
+	MAX(j.precio_final)
+FROM ordenes AS o
+INNER JOIN join_orden AS j ON j.id_orden_item = o.id_orden
+GROUP BY o.fecha_orden
+ORDER BY o.fecha_orden;
