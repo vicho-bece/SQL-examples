@@ -8,7 +8,6 @@ SELECT * FROM categorias;
 SELECT * FROM productos;
 SELECT * FROM marcas;
 
-
 -- Cantidad total de productos vendidas segun la tabla orden_item
 
 SELECT 
@@ -209,3 +208,29 @@ SELECT * FROM crosstab(
 	"Road Bikes" NUMERIC
 );
 
+-- CONSULTA PARA OBTENER CANTIDAD DE VENTAS MENSUALES POR AÑO
+SELECT * FROM crosstab(
+	'SELECT
+		EXTRACT(YEAR FROM o.fecha_orden) as anio,
+		to_char(fecha_orden::date, ''Month'') as mes,
+		COUNT(*) as ventas
+	FROM ordenes AS o
+	GROUP BY anio, mes
+	ORDER BY 1, 2',
+	
+	'SELECT DISTINCT to_char(fecha_orden::date, ''Month'') FROM ordenes ORDER BY 1'
+) AS ct(
+	anio TEXT,
+	"January  " NUMERIC,
+	"February " NUMERIC,
+	"March    " NUMERIC,
+	"April    " NUMERIC,
+	"May      " NUMERIC,
+	"June     " NUMERIC,
+	"July     " NUMERIC,
+	"August   " NUMERIC,
+	"September" NUMERIC,
+	"October  " NUMERIC,
+	"November " NUMERIC,
+	"December " NUMERIC
+)
