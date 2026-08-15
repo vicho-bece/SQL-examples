@@ -156,3 +156,56 @@ FROM ordenes AS o
 INNER JOIN join_orden AS j ON j.id_orden_item = o.id_orden
 GROUP BY o.fecha_orden
 ORDER BY o.fecha_orden;
+
+
+CREATE EXTENSION IF NOT EXISTS tablefunc;
+
+
+-- CONSULTA PARA OBTENER LA CANTIDAD DE ORDENES DE CADA ESTADO POR EL AÑO
+SELECT * FROM crosstab(
+	-- SELECCIONA: el año de la orden, estado donde reside y cantidad de ordenes
+	'SELECT
+		EXTRACT(YEAR FROM o.fecha_orden) as anio,
+		c.estado_cliente as estado,
+		COUNT(o.id_orden) as valor
+	FROM ordenes AS o
+	INNER JOIN clientes AS c ON c.id_cliente = o.id_orden_cli
+	GROUP BY anio, estado
+	ORDER BY 1, 2',
+
+	-- OBTENER VALORES UNICOS DE LA COLUMNA estado_cliente
+	'SELECT DISTINCT estado_cliente FROM clientes ORDER BY 1'
+) AS ct(
+	anio numeric,
+	NY numeric,
+	TX numeric,
+	CA numeric
+);
+
+-- ESTA CONSULTA RETORNA LA UNIDADES VENDIDAS DE CADA CATEGORIAS POR AÑO
+SELECT * FROM crosstab(
+	-- SELECIONA EL AÑO DE LA ORDEN, LAS CATEGORIAS DE BICICLETAS Y LA SUMA DE UNIDADES VENDIDAS
+	'SELECT
+		EXTRACT(YEAR FROM o.fecha_orden) as anio,
+		c.nombre_categoria as categoria,
+		SUM(i.item_cantidad) as unidad_vendida
+	FROM ordenes AS o
+	INNER JOIN orden_item AS i ON i.id_orden_item = o.id_orden
+	INNER JOIN productos AS p ON p.id_producto = i.id_item_producto
+	INNER JOIN categorias AS c ON c.id_categoria = p.id_prod_categoria
+	GROUP BY anio, categoria
+	ORDER BY 1, 2',
+
+	-- OBTENGO LAS CATEGORIAS DE BICICLETAS
+	'SELECT DISTINCT nombre_categoria FROM categorias ORDER BY 1'
+) AS ct (
+	anio TEXT,
+	"Children Bicycles" NUMERIC,
+	"Comfort Bicycles" NUMERIC,
+	"Cruisers Bicycles" NUMERIC,
+	"Cyclocross Bicycles" NUMERIC,
+	"Electric Bikes" NUMERIC,
+	"Mountain Bikes" NUMERIC,
+	"Road Bikes" NUMERIC
+);
+

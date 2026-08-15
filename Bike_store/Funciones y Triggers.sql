@@ -106,4 +106,4 @@ FOR EACH ROW
 EXECUTE PROCEDURE fn_detectar_actividad();
 
 INSERT INTO tiendas VALUES(4, 'Tienda Bicicleta', '123456897', NULL, 'Armando Casas 001', 'Nueva York', 'NY', NULL);
-SELECT * FROM actividad
+SELECT * FROM actividad;
