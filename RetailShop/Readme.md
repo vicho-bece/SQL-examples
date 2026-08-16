@@ -5,7 +5,7 @@ Tienda de Retail
 **Descripción**
 
 Una Base de Datos que contiene registros de las ventas de esta tienda de retail, incluyendo la información de los clientes que han comprado, el detalle de las ordenes de las compras y la información de los productos.
-La fuente de información de los archivos CSV que contiene la data, lo puede encontrar en el sitio web **KAGGLE** buscando el dataset denominado: **SQL Practice Dataset 1 (Easy) + Queries**.
+La fuente de información de los archivos CSV que contiene la data, lo puede encontrar en el sitio web **KAGGLE** buscando el dataset denominado: [**SQL Practice Dataset 1 (Easy) + Queries**](https://www.kaggle.com/datasets/nudratabbas/sql-practice-dataset-1-easy-queries).
 
 **Motor de Base de Datos**
 
