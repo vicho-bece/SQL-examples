@@ -5,7 +5,7 @@ Tienda de Bicicletas
 **Descripción**
 
 Una Base de Datos que contiene registros de las ventas/ordenes de bicicletas de cada sucursal de esta tienda, incluyendo la información de los clientes que han comprado, el detalle de las ordenes de las compras y los productos existentes de cada marca.
-La fuente de información de los archivos CSV que contiene la data, lo puede encontrar en el sitio web **KAGGLE** buscando el dataset denominado: **Bike Store Relational Database | SQL**.
+La fuente de información de los archivos CSV que contiene la data, lo puede encontrar en el sitio web **KAGGLE** buscando el dataset denominado: [**Bike Store Relational Database | SQL**](https://www.kaggle.com/datasets/dillonmyrick/bike-store-sample-database).
 
 **Motor de Base de Datos**
 
